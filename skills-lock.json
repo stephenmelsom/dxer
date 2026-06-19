@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "playdate-dev": {
+      "source": "ckorhonen/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/playdate-dev/SKILL.md",
+      "computedHash": "857e00bd578a3fb3f7ee7d85dd39cce9bd42afc83799670d06b26bf2415be38e"
+    }
+  }
+}
