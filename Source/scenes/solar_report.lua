@@ -51,7 +51,7 @@ function SolarReportScene:update()
     gfx.clear(gfx.kColorWhite)
 
     -- Header
-    gfx.drawText(string.format("*Day %d — Solar Report*", _dayNum), 110, 4)
+    gfx.drawText(string.format("*Day %d: Solar Report*", _dayNum), 110, 4)
     gfx.drawLine(0, 20, 400, 20)
 
     -- Solar indices

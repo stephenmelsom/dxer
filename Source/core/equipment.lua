@@ -43,16 +43,7 @@ local CATALOG = {
             rxSens  = 0.90,
             cost    = 2500,
             tier    = 4,
-        },
-        {
-            id = "flagship", name = "Flagship 1500W Station",
-            bands  = { "160m","80m","40m","20m","15m","10m","6m","2m" },
-            modes  = { "ssb","cw","fm" },
-            txPower = 1500,
-            rxSens  = 1.0,
-            cost    = 15000,
-            tier    = 5,
-        },
+        }
     },
     -- ── Antennas ────────────────────────────────────────────────────────────
     antennas = {
