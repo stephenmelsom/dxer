@@ -369,7 +369,7 @@ function OperateScene:update()
     gfx.drawLine(0, 216, 400, 216)
     -- Hint reflects context-sensitive Up/Down (Bug #6b).
     local udHint = playdate.isCrankDocked() and "\u{2195}=Tune" or "\u{2195}=Mode"
-    gfx.drawText("\u{2190}\u{2192}=Band  " .. udHint .. "  B=Fine  \u{24B6}=Log", 4, 220)
+    gfx.drawText("\u{2190}\u{2192}=Band  " .. udHint .. "  \u{24b7}=Fine  \u{24B6}=Log", 4, 220)
 
     -- Score display
     if _tournament and _tournament.isActive() then

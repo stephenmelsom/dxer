@@ -99,7 +99,7 @@ local function drawShack()
         hilltop   = "[ Hilltop ]",
         mountain  = "[ Mountain ]",
     }
-    gfx.drawText("Shack: " .. (labels[loc] or loc), 270, 30)
+    gfx.drawText("Shack: " .. (labels[loc] or loc), 270, 199)
 end
 
 function ShopScene:enter()
@@ -122,23 +122,23 @@ function ShopScene:update()
     -- Header
     gfx.drawText("*Shop*", 180, 2)
     gfx.drawText(string.format("$%d", cash), 330, 2)
-    gfx.drawLine(0, 16, 400, 16)
+    gfx.drawLine(0, 22, 400, 22)
 
     -- Category tabs
     for i, cat in ipairs(CATEGORIES) do
         local x = (i - 1) * 80 + 10
         local label = CAT_LABELS[cat]
         if i == _catIndex then
-            gfx.fillRect(x - 2, 18, 78, 16)
+            gfx.fillRect(x - 2, 26, 78, 22)
             gfx.setImageDrawMode(gfx.kDrawModeInverted)
-            gfx.drawText(label, x + 2, 20)
+            gfx.drawText(label, x + 2, 28)
             gfx.setImageDrawMode(gfx.kDrawModeCopy)
         else
-            gfx.drawRect(x - 2, 18, 78, 16)
-            gfx.drawText(label, x + 2, 20)
+            gfx.drawRect(x - 2, 26, 78, 22)
+            gfx.drawText(label, x + 2, 28)
         end
     end
-    gfx.drawLine(0, 36, 400, 36)
+    gfx.drawLine(0, 51, 400, 51)
 
     drawShack()
 
@@ -151,7 +151,7 @@ function ShopScene:update()
         local idx = startRow + i
         if idx > #items then break end
         local item = items[idx]
-        local y    = 40 + i * 22
+        local y    = 55 + i * 22
         local owned    = isOwned(item)
         local equipped = isEquipped(item)
 
@@ -177,7 +177,7 @@ function ShopScene:update()
         gfx.drawText(costStr, 260, y + 1)
     end
 
-    gfx.drawLine(0, 200, 400, 200)
+    gfx.drawLine(0, 197, 400, 197)
 
     -- Selected item detail
     if #items > 0 then
@@ -188,7 +188,7 @@ function ShopScene:update()
             if item.txPower then detail = detail .. "TX:" .. item.txPower .. "W  " end
             if item.gain    then detail = detail .. "Gain:" .. item.gain .. "dBd  " end
             if item.mult    then detail = detail .. "Amp:" .. item.mult .. "x  " end
-            gfx.drawText(detail, 4, 202)
+            gfx.drawText(detail, 4, 200)
         end
     end
 
@@ -196,11 +196,11 @@ function ShopScene:update()
     if _statusTimer > 0 then
         _statusTimer = _statusTimer - 1
         local mw = gfx.getTextSize(_statusMsg)
-        gfx.drawText(_statusMsg, (400 - mw) // 2, 215)
+        gfx.drawText(_statusMsg, (400 - mw) // 2, 211)
     end
 
-    gfx.drawLine(0, 228, 400, 228)
-    gfx.drawText("\u{24B6}=Buy/Equip  \u{24B7}=Back  \u{2190}\u{2192}=Category", 4, 230)
+    gfx.drawLine(0, 217, 400, 217)
+    gfx.drawText("\u{24B6}=Buy/Equip  \u{24B7}=Back  \u{2190}\u{2192}=Category", 4, 220)
 
     -- ── Input ────────────────────────────────────────────────────────────────
     if playdate.buttonJustPressed(playdate.kButtonUp) then

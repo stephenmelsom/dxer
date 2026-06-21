@@ -59,7 +59,7 @@ function SummaryScene:update()
     gfx.clear(gfx.kColorWhite)
 
     gfx.drawText("*Session Complete!*", 130, 4)
-    gfx.drawLine(0, 20, 400, 20)
+    gfx.drawLine(0, 24, 400, 24)
 
     local data = _save.get()
 
@@ -70,7 +70,7 @@ function SummaryScene:update()
     gfx.drawText(string.format("Bank:      $%d", data.story.cash),    20, 92)
     gfx.drawText(string.format("Day:       %d", data.story.day - 1),  20, 108)
 
-    gfx.drawLine(0, 124, 400, 124)
+    gfx.drawLine(0, 128, 400, 128)
 
     -- New awards
     if #_newAwards > 0 then
@@ -79,7 +79,7 @@ function SummaryScene:update()
             gfx.drawText(string.format("[%s] %s", aw.name, aw.desc), 20, 140 + (i - 1) * 18)
         end
     else
-        gfx.drawText("No new awards this session.", 20, 128)
+        gfx.drawText("No new awards this session.", 20, 130)
         -- Show progress toward next award (simple placeholder)
         local nextStr = string.format("Next DXCC milestone: %d/10 entities",
             math.min(_dxccCount, 10))
@@ -88,13 +88,13 @@ function SummaryScene:update()
         elseif _dxccCount >= 50  then nextStr = "DXCC count: " .. _dxccCount .. " — target 100"
         elseif _dxccCount >= 10  then nextStr = "DXCC count: " .. _dxccCount .. " — target 50"
         end
-        gfx.drawText(nextStr, 20, 146)
+        gfx.drawText(nextStr, 20, 148)
     end
 
-    gfx.drawLine(0, 210, 400, 210)
-    gfx.drawText("\u{24B6}=Shop   \u{24B7}=Next Day", 110, 214)
-    gfx.drawLine(0, 228, 400, 228)
-    gfx.drawText(string.format("Day %d begins →", data.story.day), 140, 230)
+    gfx.drawLine(0, 192, 400, 192)
+    gfx.drawText("\u{24B6}=Shop   \u{24B7}=Next Day", 110, 196)
+    gfx.drawLine(0, 216, 400, 216)
+    gfx.drawText(string.format("Day %d begins →", data.story.day), 140, 220)
 
     if playdate.buttonJustPressed(playdate.kButtonA) then
         _sceneManager.switch(ShopScene)
