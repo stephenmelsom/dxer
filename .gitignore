@@ -1,0 +1,10 @@
+# Playdate build artifact (compiled output of `pdc Source DXer.pdx`)
+DXer.pdx/
+*.pdx
+
+# macOS
+.DS_Store
+
+# Editor swap files
+*.swp
+*.swo

@@ -1,0 +1,7 @@
+name=DXer
+author=smelsom
+description=A cozy ham-radio DXing game. Tune the crank, work the world.
+bundleID=com.smelsom.dxer
+version=0.1.0
+buildNumber=1
+imagePath=images/launcher/
