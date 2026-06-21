@@ -50,8 +50,8 @@ end
 
 -- S-meter row: boxes at y136, scale text at y152. Lives in its own band
 -- below the panadapter freq labels (≈y121-133) and above the zero-beat meter.
-local SMETER_Y    = 136
-local SMETER_SCALE_Y = 152
+local SMETER_Y    = 142
+local SMETER_SCALE_Y = 160
 local function drawSMeter()
     local SEGS  = 12
     local SEG_W = 14
@@ -69,7 +69,7 @@ local function drawSMeter()
             gfx.fillRect(sx + 1, SMETER_Y + 1, SEG_W - 2, SEG_H - 2)
         end
     end
-    gfx.drawText("1       5       9     +", startX, SMETER_SCALE_Y)
+    gfx.drawText("1            5           9       +", startX + 2, SMETER_SCALE_Y)
 end
 
 local function drawBandCondition()
@@ -78,7 +78,7 @@ local function drawBandCondition()
     local label  = Propagation.conditionLabel(cond)
     -- Left side of the S-meter scale row; the centered "1 5 9 +" scale
     -- starts at x≈104, so this never overprints it.
-    gfx.drawText("Prop: " .. label, 4, SMETER_SCALE_Y)
+    gfx.drawText("Prop: " .. label, 6, SMETER_SCALE_Y)
 end
 
 local function drawCallPrompt()
@@ -366,20 +366,20 @@ function OperateScene:update()
         playdate.ui.crankIndicator:draw()
     end
 
-    gfx.drawLine(0, 232, 400, 232)
+    gfx.drawLine(0, 216, 400, 216)
     -- Hint reflects context-sensitive Up/Down (Bug #6b).
     local udHint = playdate.isCrankDocked() and "\u{2195}=Tune" or "\u{2195}=Mode"
-    gfx.drawText("\u{2190}\u{2192}=Band  " .. udHint .. "  B=Fine  \u{24B6}=Log", 4, 233)
+    gfx.drawText("\u{2190}\u{2192}=Band  " .. udHint .. "  B=Fine  \u{24B6}=Log", 4, 220)
 
     -- Score display
     if _tournament and _tournament.isActive() then
         local roundScore = _tournament.getScore()
         local needed     = _tournament.getThreshold()
-        gfx.drawText(string.format("R%d: %d/%d", _tournament.getRound(), roundScore, needed), 270, 233)
+        gfx.drawText(string.format("R%d: %d/%d", _tournament.getRound(), roundScore, needed), 270, 220)
     else
         local data = _save.get()
         local pts  = data and data.story.totalPoints or 0
-        gfx.drawText(string.format("%d pts", pts), 330, 233)
+        gfx.drawText(string.format("%d pts", pts), 330, 220)
     end
 end
 

@@ -10,8 +10,8 @@ ZeroBeatMeter = {}
 -- Meter geometry (drawn in absolute screen coordinates)
 local MX     = 80     -- left edge
 local MW     = 240    -- width
-local MY     = 177    -- y center of bar (own row below the S-meter)
-local MH     = 14     -- bar height
+local MY     = 190    -- y center of bar (own row below the S-meter)
+local MH     = 20     -- bar height
 local HALF   = MW // 2
 
 function ZeroBeatMeter.draw(offsetHz, hasSignal)
@@ -36,7 +36,7 @@ function ZeroBeatMeter.draw(offsetHz, hasSignal)
         -- "TUNE" label when no signal in range
         local lbl = "-- TUNE --"
         local lw = gfx.getTextSize(lbl)
-        gfx.drawText(lbl, cx - lw // 2, MY - 5)
+        gfx.drawText(lbl, cx - lw // 2, MY - 7)
         return
     end
 
