@@ -19,6 +19,31 @@ DXer is a cozy ham-radio DXing game for the **Playdate** console, written in Lua
 - `playdate.datastore.write({stage="checkpoint"})` is the primary debugging tool — it works before any imports and persists to `~/Developer/PlaydateSDK/Disk/Data/com.smelsom.dxer/data.json`. When the game crashes silently, drop checkpoints and read that file to find the last stage reached.
 - The Simulator opens on a separate macOS Space. To screenshot: `osascript -e 'tell application "Playdate Simulator" to activate'` then `screencapture -R 100,50,900,700 /tmp/out.png`.
 
+#### Driving the Simulator from the terminal (verified workflow)
+
+To reach a specific scene (e.g. a mid-game screen) you must feed it input. What works:
+
+- **Send button presses by clicking the Simulator's on-screen controls — not the keyboard.** `osascript … keystroke`/`key code` into the Simulator is unreliable: presses often don't register, or they only give the window focus. Synthetic mouse clicks via CoreGraphics are reliable.
+- The `Quartz` Python module is **not installed**; call CoreGraphics through `ctypes` instead. Reusable clicker:
+
+  ```python
+  import ctypes, ctypes.util, time, subprocess
+  cg = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ApplicationServices'))
+  class P(ctypes.Structure): _fields_=[('x',ctypes.c_double),('y',ctypes.c_double)]
+  cg.CGEventCreateMouseEvent.restype = ctypes.c_void_p
+  cg.CGEventCreateMouseEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint32, P, ctypes.c_uint32]
+  cg.CGEventPost.argtypes = [ctypes.c_uint32, ctypes.c_void_p]
+  subprocess.run(['osascript','-e','tell application "Playdate Simulator" to activate']); time.sleep(1)
+  def click(x, y):                       # screen-point coords
+      for t in (1, 2):                   # 1=LeftMouseDown, 2=LeftMouseUp
+          cg.CGEventPost(0, cg.CGEventCreateMouseEvent(None, t, P(x, y), 0)); time.sleep(0.07)
+  ```
+
+- **Always `activate` first, then `time.sleep(~1s)`** before clicking — the window needs focus and the app a moment to settle.
+- **Coordinates are screen points.** Screenshot first with `screencapture -R X,Y,W,H`, find the button in the PNG, then map back: `screen_x = X + dx*(W/png_point_width)`, same for y. On this Retina display the PNG pixel size is 2× the point region, so divide by the displayed width, not the pixel width. Button positions shift if the window moves, so re-screenshot after any rebuild rather than reusing old coords.
+- **Step one click at a time, screenshotting between each** (title → menu → dialog → scene). Firing a fixed sequence of clicks blindly overshoots — a dialog (e.g. "Overwrite save?") may or may not appear depending on save state, so the click count isn't constant.
+- `./build.sh` reopens the Simulator at the title screen, which is the most reliable way to reset to a known state before navigating.
+
 ## Playdate Lua conventions (critical — these differ from standard Lua)
 
 - **No `require`.** Playdate Lua has no `package` library. Use `import "path"` (no return value). Every module exports its table as a **global** (`VFO = {}`, not `local VFO = {}`); callers reference the global directly after `main.lua` imports it. Some modules still have a trailing `return X` — harmless, but the global is what's actually used.
